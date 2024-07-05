@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hitachi
+  namespace: prod-team 
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: prod
+  strategy:
+    type: RolligUpdate
+    rollingUpdate:
+       maxSurge: 1
+
+  template:
+    metadata:
+      labels:
+        app: prod
+    spec:
+      containers:
+      - name: httpd-prod
+        image: sachin900/kube-2:latest
+        ports:
+        - containerPort: 80  # Adjust the port if needed
